@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import Signup from "./Pages/Signup";
 import Header from "./Components/Header";
 import Projects from "./Pages/Projects";
+import Signin from "./Pages/Signin";
 
 const PageRouter = () => {
   return (
@@ -16,6 +17,7 @@ const PageRouter = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/projects' element={<Projects />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/signin' element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
