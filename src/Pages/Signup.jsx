@@ -1,11 +1,16 @@
+/* eslint-disable no-undef */
 // @ts-nocheck
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/bloglogo.png";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
+import axios from "axios";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -13,11 +18,29 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (!formData.username || !formData.email || !formData.password) {
+      return setErrorMessage("All fields Required");
+    }
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+      const res = await axios.post(`/api/auth/signup`, {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+      setLoading(false);
+      if (res.status === 200) {
+        navigate("/signin");
+      }
+    } catch (error) {
+      setErrorMessage(error?.response?.data?.message);
+      setLoading(false);
+    }
   };
 
   return (
-    <div className='min-h-screen mt-20'>
+    <div className='h-screen mt-20'>
       <div className='flex max-w-4xl m-auto p-3 flex-col md:flex-row md:items-center md:gap-10'>
         {/* left */}
         <div className='flex-1'>
@@ -67,8 +90,16 @@ const Signup = () => {
               gradientDuoTone='purpleToBlue'
               type='submit'
               className='w-full'
+              disabled={loading}
             >
-              Sign Up
+              {loading ? (
+                <>
+                  <Spinner size='sm' />
+                  <span className='pl-3'>Loading...</span>
+                </>
+              ) : (
+                "SignUp"
+              )}
             </Button>
           </form>
           <div>
@@ -77,6 +108,11 @@ const Signup = () => {
               SignIn
             </Link>
           </div>
+          {errorMessage && (
+            <Alert color='failure' className='mt-5'>
+              {errorMessage}
+            </Alert>
+          )}
         </div>
       </div>
     </div>
