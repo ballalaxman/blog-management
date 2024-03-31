@@ -5,12 +5,15 @@ import Logo from "../assets/bloglogo.png";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
+import OAuth from "../Components/OAuth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -19,22 +22,20 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage("All fields Required");
+      return dispatch(signInFailure("All fields Required"));
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart());
       const res = await axios.post(`/api/auth/signin`, {
         email: formData.email,
         password: formData.password,
       });
-      setLoading(false);
       if (res.status === 200) {
+        dispatch(signInSuccess(res.data));
         navigate("/");
       }
     } catch (error) {
-      setErrorMessage(error?.response?.data?.message);
-      setLoading(false);
+      dispatch(signInFailure(error?.response?.data?.message));
     }
   };
 
@@ -55,6 +56,7 @@ const SignIn = () => {
             or with Google.
           </p>
         </div>
+
         {/* right */}
         <div className='flex-1'>
           <form onSubmit={handleSubmit}>
@@ -91,6 +93,7 @@ const SignIn = () => {
                 "SignIn"
               )}
             </Button>
+            <OAuth />
           </form>
           <div>
             <span className='text-lg'>Didnt Have an account?</span>

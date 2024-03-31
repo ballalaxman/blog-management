@@ -5,7 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import Signup from "./Pages/Signup";
 import Header from "./Components/Header";
 import Projects from "./Pages/Projects";
-import Signin from "./Pages/Signin";
+import Signin from "./Pages/SignIn";
 import Footer from "./Components/FooterComponent";
 
 const PageRouter = () => {

@@ -5,6 +5,7 @@ import Logo from "../assets/bloglogo.png";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
+import OAuth from "../Components/OAuth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -101,6 +102,7 @@ const Signup = () => {
                 "SignUp"
               )}
             </Button>
+            <OAuth />
           </form>
           <div>
             <span className='text-lg'>Have an account?</span>
