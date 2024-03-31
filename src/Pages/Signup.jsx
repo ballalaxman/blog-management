@@ -47,7 +47,7 @@ const Signup = () => {
           <Link href='#'>
             <img
               src={Logo}
-              className='h-60 w-60 sm:h-30'
+              className='w-28 aspect-square sm:w-52'
               alt='Flowbite React Logo'
             />
           </Link>
