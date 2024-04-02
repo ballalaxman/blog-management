@@ -1,12 +1,18 @@
 // @ts-nocheck
-import { Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import Logo from "../assets/bloglogo.png";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/themeSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const path = useLocation().pathname;
+  const curreentUser = useSelector((state) => state.user.currentUser);
+  const theme = useSelector((state) => state.theme.theme);
+
   return (
     <Navbar className='border-b-2'>
       <Navbar.Brand href='#'>
@@ -27,14 +33,33 @@ const Header = () => {
         <AiOutlineSearch />
       </Button>
       <div className='flex gap-2 md:order-2'>
-        <Button className='hidden sm:inline w-14 h-10'>
-          <FaMoon />
+        <Button
+          className='hidden sm:inline w-14 h-10'
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === "light" ? <FaMoon /> : <FaSun />}
         </Button>
-        <Link to='/signup'>
-          <Button gradientDuoTone='cyanToBlue' size='md'>
-            Sign In
-          </Button>
-        </Link>
+        {curreentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={<Avatar alt='user' img={curreentUser.profilePic} rounded />}
+          >
+            <Dropdown.Header>@{curreentUser.username}</Dropdown.Header>
+            <Dropdown.Header>{curreentUser.email}</Dropdown.Header>
+            <Link to={"/dashboard?tab=profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <Link to='/signup'>
+            <Button gradientDuoTone='cyanToBlue' size='md'>
+              Sign In
+            </Button>
+          </Link>
+        )}
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
