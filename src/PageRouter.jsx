@@ -7,6 +7,7 @@ import Header from "./Components/Header";
 import Projects from "./Pages/Projects";
 import Signin from "./Pages/SignIn";
 import Footer from "./Components/FooterComponent";
+import PrivateRoute from "./Components/PrivateRoute";
 
 const PageRouter = () => {
   return (
@@ -15,7 +16,9 @@ const PageRouter = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
         <Route path='/projects' element={<Projects />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/signin' element={<Signin />} />
