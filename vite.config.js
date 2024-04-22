@@ -5,14 +5,14 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ["js-big-decimal"],
+    exclude: ["js-big-decimal"]
   },
   server: {
     proxy: {
       "/api": {
-        target: "http://192.168.1.6:8080",
-        changeOrigin: true,
-      },
-    },
-  },
+        target: "http://192.168.1.16:5000",
+        changeOrigin: true
+      }
+    }
+  }
 });
