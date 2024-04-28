@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,8 +11,14 @@ import {
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { app } from "../firebase";
-import { updateFailure, updateStart, updateSuccess } from "../redux/userSlice";
+import {
+  deleteUserFailure,
+  updateFailure,
+  updateStart,
+  updateSuccess
+} from "../redux/userSlice";
 import axios from "axios";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const DashProfile = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -21,6 +27,7 @@ const DashProfile = () => {
   const [imageFileUrl, setImageFileUrl] = useState("");
   const [imageFileUploadProgress, setImageUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [showModel, setShowmodel] = useState(false);
   const [formData, setFormData] = useState({});
 
   const filePickerRef = useRef();
@@ -95,12 +102,22 @@ const DashProfile = () => {
       dispatch(updateSuccess(res.data.data));
       console.log(res);
     } catch (error) {
-      console.log("Error:", error);
       console.log(
         "Error Details:",
         error.response ? error.response.data : error.message
       );
       dispatch(updateFailure(error));
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    setShowmodel(false);
+    try {
+      dispatch(updateStart());
+      const res = await axios.delete(`/api/user/delete/${currentUser._id}`);
+      dispatch(updateSuccess(res.data.data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -176,9 +193,33 @@ const DashProfile = () => {
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-4">
-        <span className="cursor-pointer">Delete Account</span>
+        <span className="cursor-pointer" onClick={() => setShowmodel(true)}>
+          Delete Account
+        </span>
         <span className="cursor-pointer">Sign Out</span>
       </div>
+      <Modal
+        show={showModel}
+        onClose={() => setShowmodel(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete your account?
+            </h3>
+            <div className="flex items-center justify-center gap-3">
+              <Button color="failure" onClick={handleDeleteUser}>
+                Yes, I&apos;m sure
+              </Button>
+              <Button onClick={() => setShowmodel(false)}>No, Cancel</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
