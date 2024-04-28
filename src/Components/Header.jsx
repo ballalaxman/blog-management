@@ -6,6 +6,8 @@ import Logo from "../assets/bloglogo.png";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/themeSlice";
+import axios from "axios";
+import { signOutSuccess } from "../redux/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,28 +15,37 @@ const Header = () => {
   const curreentUser = useSelector((state) => state.user.currentUser);
   const theme = useSelector((state) => state.theme.theme);
 
+  const handleSignOut = async () => {
+    try {
+      await axios.post("api/user/signout");
+      dispatch(signOutSuccess());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Navbar className='border-b-2'>
-      <Navbar.Brand href='#'>
-        <img src={Logo} className='mr-3 h-6 sm:h-9' alt='Flowbite React Logo' />
-        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
+    <Navbar className="border-b-2">
+      <Navbar.Brand href="#">
+        <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Laxman Balla
         </span>
       </Navbar.Brand>
       <form>
         <TextInput
-          type='text'
-          placeholder='search here..'
+          type="text"
+          placeholder="search here.."
           rightIcon={AiOutlineSearch}
-          className='hidden lg:inline !rounded-none'
+          className="hidden lg:inline !rounded-none"
         />
       </form>
-      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
+      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
         <AiOutlineSearch />
       </Button>
-      <div className='flex gap-2 md:order-2'>
+      <div className="flex gap-2 md:order-2">
         <Button
-          className='hidden sm:inline w-14 h-10'
+          className="hidden sm:inline w-14 h-10"
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === "light" ? <FaMoon /> : <FaSun />}
@@ -43,7 +54,7 @@ const Header = () => {
           <Dropdown
             arrowIcon={false}
             inline
-            label={<Avatar alt='user' img={curreentUser.profilePic} rounded />}
+            label={<Avatar alt="user" img={curreentUser.profilePic} rounded />}
           >
             <Dropdown.Header>@{curreentUser.username}</Dropdown.Header>
             <Dropdown.Header>{curreentUser.email}</Dropdown.Header>
@@ -51,11 +62,11 @@ const Header = () => {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
-          <Link to='/signup'>
-            <Button gradientDuoTone='cyanToBlue' size='md'>
+          <Link to="/signup">
+            <Button gradientDuoTone="cyanToBlue" size="md">
               Sign In
             </Button>
           </Link>
@@ -64,13 +75,13 @@ const Header = () => {
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to='/'>Home</Link>
+          <Link to="/">Home</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to='/about'>About</Link>
+          <Link to="/about">About</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to='/projects'>Projects</Link>
+          <Link to="/projects">Projects</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

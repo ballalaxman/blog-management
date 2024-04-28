@@ -13,6 +13,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { app } from "../firebase";
 import {
   deleteUserFailure,
+  signOutSuccess,
   updateFailure,
   updateStart,
   updateSuccess
@@ -121,6 +122,15 @@ const DashProfile = () => {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await axios.post("api/user/signout");
+      dispatch(signOutSuccess());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto w-full">
       <h1 className="my-7 text-center font-semibold text-4xl">Profile</h1>
@@ -196,7 +206,9 @@ const DashProfile = () => {
         <span className="cursor-pointer" onClick={() => setShowmodel(true)}>
           Delete Account
         </span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={handleSignOut}>
+          Sign Out
+        </span>
       </div>
       <Modal
         show={showModel}
