@@ -20,12 +20,15 @@ import {
 } from "../redux/userSlice";
 import axios from "axios";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const DashProfile = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
+  const loading = useSelector((state) => state.user.loading);
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState("");
+  const [imageFileUploading, setImageFileUploading] = useState(false);
   const [imageFileUploadProgress, setImageUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [showModel, setShowmodel] = useState(false);
@@ -59,6 +62,7 @@ const DashProfile = () => {
     //     }
     //   }
     setImageFileUploadError(null);
+    setImageFileUploading(true);
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
     const storageRef = ref(storage, fileName);
@@ -75,11 +79,13 @@ const DashProfile = () => {
           "Could not upload Image(File must be less than 2mb)"
         );
         setImageUploadProgress(null);
+        setImageFileUploading(false);
       },
       () =>
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           setImageFileUrl(url);
           setFormData({ ...formData, profilePic: url });
+          setImageFileUploading(false);
         })
     );
   };
@@ -198,9 +204,25 @@ const DashProfile = () => {
           defaultValue={"************"}
           onChange={handleInputChange}
         />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToBlue"
+          outline
+          disabled={loading || imageFileUploading}
+        >
+          {loading || imageFileUploading ? "Loading..." : "Update"}
         </Button>
+        {currentUser?.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone="purpleToBlue"
+              className="w-full"
+            >
+              Create post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between mt-4">
         <span className="cursor-pointer" onClick={() => setShowmodel(true)}>
