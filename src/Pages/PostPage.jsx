@@ -1,3 +1,4 @@
+import CommentsSection from "../Components/CommentsSection";
 import CallToAction from "../Components/CallToAction";
 import axios from "axios";
 import DOMPurify from "dompurify";
@@ -41,6 +42,8 @@ const PostPage = () => {
     );
   }
 
+  console.log(error);
+
   const sanitizedHTML = DOMPurify.sanitize(post && post.content);
 
   return (
@@ -74,6 +77,7 @@ const PostPage = () => {
       <div className="max-w-4xl mx-auto">
         <CallToAction />
       </div>
+      <CommentsSection postId={post._id} />
     </main>
   );
 };
