@@ -1,7 +1,8 @@
+import CallToAction from "../Components/CallToAction";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { Button, Spinner } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const PostPage = () => {
@@ -70,6 +71,9 @@ const PostPage = () => {
         className="p-3 max-w-2xl mx-auto post-content"
         dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
       ></div>
+      <div className="max-w-4xl mx-auto">
+        <CallToAction />
+      </div>
     </main>
   );
 };
