@@ -43,7 +43,7 @@ const Comment = ({ comment, onLike }) => {
           </span>
         </div>
         <p className="text-gray-600 pb-2">{comment.content}</p>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2 pt-2 border-t dark:border-gray-700 max-w-fit">
           <button
             className={`text-gray-400 ${
               currentUser &&
