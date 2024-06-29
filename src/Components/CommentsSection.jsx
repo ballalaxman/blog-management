@@ -1,17 +1,20 @@
 /* eslint-disable react/prop-types */
 // @ts-nocheck
 import axios from "axios";
-import { Button, Textarea } from "flowbite-react";
+import { Button, Modal, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const CommentsSection = ({ postId }) => {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state?.user?.currentUser);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [showModel, setShowModel] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,6 +76,22 @@ const CommentsSection = ({ postId }) => {
         return c._id === comment._id ? { ...c, content: editedComment } : c;
       })
     );
+  };
+
+  const handleDeleteComment = async () => {
+    try {
+      if (!currentUser) {
+        navigate("/signin");
+        return;
+      }
+      const res = await axios.delete(`/api/comment/delete/${commentToDelete}`);
+      if (res.status === 200) {
+        setComments(comments.filter((c) => c._id !== commentToDelete));
+        setShowModel(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -138,10 +157,36 @@ const CommentsSection = ({ postId }) => {
               key={comment._id}
               onLike={handleLike}
               onEdit={handleEdit}
+              onDelete={(commentId) => {
+                setShowModel(true);
+                setCommentToDelete(commentId);
+              }}
             />
           ))}
         </>
       )}
+      <Modal
+        show={showModel}
+        onClose={() => setShowModel(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this comment?
+            </h3>
+            <div className="flex items-center justify-center gap-3">
+              <Button color="failure" onClick={handleDeleteComment}>
+                Yes, I&apos;m sure
+              </Button>
+              <Button onClick={() => setShowModel(false)}>No, Cancel</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

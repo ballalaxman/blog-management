@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const currentUser = useSelector((state) => state?.user?.currentUser);
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -107,7 +107,7 @@ const Comment = ({ comment, onLike, onEdit }) => {
               >
                 <FaThumbsUp className="text-sm" />
               </button>
-              <p className="text-gray-400">
+              <p className="text-gray-400 text-sm">
                 {comment.NumberofLikes > 0 &&
                   comment.NumberofLikes +
                     " " +
@@ -117,10 +117,20 @@ const Comment = ({ comment, onLike, onEdit }) => {
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (
                   <button
                     type="button"
-                    className="text-gray-400 hover:text-blue-500"
+                    className="text-gray-400 hover:text-blue-500 text-sm"
                     onClick={handleEditComment}
                   >
                     Edit
+                  </button>
+                )}
+              {currentUser &&
+                (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                  <button
+                    type="button"
+                    className="text-gray-400 hover:text-red-500 text-sm"
+                    onClick={() => onDelete(comment._id)}
+                  >
+                    Delete
                   </button>
                 )}
             </div>
