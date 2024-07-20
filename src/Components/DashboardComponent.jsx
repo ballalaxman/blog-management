@@ -36,7 +36,7 @@ const DashboardComponent = () => {
       const res = await axios.get("/api/post/getposts?limit=5");
       if (res.status === 200) {
         setPosts(res.data.posts);
-        setTotalPosts(res.data.totalPosts);
+        setTotalPosts(res.data.totalPost);
         setLastMonthPost(res.data.totalPostInLastMonth);
       }
     };

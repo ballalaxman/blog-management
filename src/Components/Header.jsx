@@ -45,7 +45,7 @@ const Header = () => {
       </Button>
       <div className="flex gap-2 md:order-2">
         <Button
-          className="hidden sm:inline w-14 h-10"
+          className="hidden sm:inline w-14 h-10 focus:ring-0"
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === "light" ? <FaMoon /> : <FaSun />}

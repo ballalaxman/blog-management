@@ -10,7 +10,7 @@ const CallToAction = () => {
         </p>
         <Button
           gradientDuoTone="purpleToPink"
-          className="rounded-tl-2xl rounded-br-2xl"
+          className="rounded-tl-2xl rounded-br-2xl max-w-96 focus:ring-0"
           fullSized
         >
           <a href="https://www.w3schools.com" target="_blank" rel="noreferrer">
@@ -18,7 +18,7 @@ const CallToAction = () => {
           </a>
         </Button>
       </div>
-      <div className="p-7 flex-1">
+      <div className="p-7 flex-1 max-w-[700px]">
         <img src="https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2023/01/Python-vs-Java-featured-image-1024x675.png" />
       </div>
     </div>
