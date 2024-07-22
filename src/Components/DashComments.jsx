@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import axios from "axios";
 import { Button, Modal, Table } from "flowbite-react";
@@ -28,8 +29,6 @@ const DashComments = () => {
       fetchComments();
     }
   }, []);
-
-  console.log(comments);
 
   const handleShowMore = async () => {
     const startIndex = comments.length;
