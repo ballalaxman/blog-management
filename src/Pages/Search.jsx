@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+// @ts-nocheck
 import axios from "axios";
 import PostCard from "../Components/PostCard";
 import { Button, Select, TextInput } from "flowbite-react";
@@ -15,6 +15,7 @@ const Search = () => {
   });
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -33,6 +34,7 @@ const Search = () => {
         const res = await axios.get(`/api/post/getPosts?${searchQuery}`);
         if (res.status === 200) {
           setPosts(res.data.posts);
+          setShowMore(res.data.posts.length >= 9);
         }
       } catch (error) {
         console.log(error);
@@ -65,6 +67,23 @@ const Search = () => {
     urlParams.set("category", sidebarData.category);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const handleShowMore = async () => {
+    const numberOfPosts = posts.length;
+    const startIndex = numberOfPosts;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    try {
+      const res = await axios.get(`/api/post/getposts?${searchQuery}`);
+      if (res.status === 200) {
+        setPosts([...posts, ...res.data.posts]);
+        setShowMore(res.data.posts.length >= 9);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -134,6 +153,14 @@ const Search = () => {
           {!loading &&
             posts &&
             posts.map((post) => <PostCard key={post?._id} post={post} />)}
+          {showMore && (
+            <button
+              className="text-teal-500 text-lg hover:underline p-7 w-full"
+              onClick={handleShowMore}
+            >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>
