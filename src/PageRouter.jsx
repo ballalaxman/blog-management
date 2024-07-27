@@ -13,6 +13,7 @@ import OnlyAdminPrivateRoute from "./Components/OnlyAdminPrivateRoute";
 import UpdatePost from "./Pages/UpdatePost";
 import PostPage from "./Pages/PostPage";
 import ScrollToTop from "./Components/ScrollToTop";
+import Search from "./Pages/Search";
 
 const PageRouter = () => {
   return (
@@ -33,6 +34,7 @@ const PageRouter = () => {
         <Route path="/post/:postSlug" element={<PostPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>
