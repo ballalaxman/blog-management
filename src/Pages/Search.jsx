@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import axios from "axios";
 import PostCard from "../Components/PostCard";

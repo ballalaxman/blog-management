@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://192.168.1.27:5000",
+        target: "https://blog-management-backend-umber.vercel.app",
         changeOrigin: true
       }
     }

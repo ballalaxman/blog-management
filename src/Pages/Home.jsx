@@ -41,9 +41,6 @@ const Home = () => {
           See all Posts
         </Link>
       </div>
-      <div className="p-3 lg:p-5 bg-amber-100 dark:bg-slate-700">
-        <CallToAction />
-      </div>
 
       <div className="max-w-8xl mx-auto my-10 p-3 flex flex-col gap-9 py-7">
         {posts && posts.length > 0 && (
@@ -60,6 +57,10 @@ const Home = () => {
             </p>
           </div>
         )}
+      </div>
+
+      <div className="p-3 lg:p-5 bg-amber-100 dark:bg-slate-700">
+        <CallToAction />
       </div>
     </div>
   );
