@@ -23,7 +23,7 @@ const DashSidebar = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post("api/user/signout");
+      await axios.post("/api/user/signout");
       dispatch(signOutSuccess());
     } catch (error) {
       console.log(error);

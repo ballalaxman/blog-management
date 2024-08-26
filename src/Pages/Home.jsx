@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("api/post/getPosts");
+        const res = await axios.get("/api/post/getPosts");
         if (res.status === 200) {
           setPosts(res.data.posts);
         }
