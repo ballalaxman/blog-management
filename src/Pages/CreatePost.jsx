@@ -15,7 +15,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const CreatePost = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable react/prop-types */
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 import axios from "axios";
 import { Button, Textarea } from "flowbite-react";
 import moment from "moment";

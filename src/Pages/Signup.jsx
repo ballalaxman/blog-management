@@ -6,7 +6,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 import OAuth from "../Components/OAuth";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});

@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../redux/userSlice";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const DashSidebar = () => {
   const location = useLocation();

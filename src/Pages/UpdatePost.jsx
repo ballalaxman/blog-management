@@ -16,7 +16,7 @@ import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const UpdatePost = () => {
   const navigate = useNavigate();

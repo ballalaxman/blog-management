@@ -8,7 +8,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
 import OAuth from "../Components/OAuth";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});

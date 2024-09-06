@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 import axios from "axios";
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react";

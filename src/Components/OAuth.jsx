@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { app } from "../firebase";
 import { signInSuccess } from "../redux/userSlice";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const OAuth = () => {
   const dispatch = useDispatch();

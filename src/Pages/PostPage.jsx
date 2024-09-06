@@ -7,7 +7,7 @@ import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PostCard from "../Components/PostCard";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const PostPage = () => {
   const { postSlug } = useParams();

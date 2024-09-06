@@ -5,7 +5,7 @@ import PostCard from "../Components/PostCard";
 import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const Search = () => {
   const location = useLocation();

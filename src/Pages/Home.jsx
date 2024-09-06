@@ -4,7 +4,7 @@ import CallToAction from "../Components/CallToAction";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import PostCard from "../Components/PostCard";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);

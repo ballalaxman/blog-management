@@ -9,7 +9,7 @@ import { toggleTheme } from "../redux/themeSlice";
 import axios from "axios";
 import { signOutSuccess } from "../redux/userSlice";
 import { useEffect, useState } from "react";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const Header = () => {
   const dispatch = useDispatch();

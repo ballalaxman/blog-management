@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const CommentsSection = ({ postId }) => {
   const navigate = useNavigate();

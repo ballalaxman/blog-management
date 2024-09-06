@@ -21,7 +21,7 @@ import {
 import axios from "axios";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { apiUrl } from "apiInstance";
+import { apiUrl } from "../apiInstance";
 
 const DashProfile = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
