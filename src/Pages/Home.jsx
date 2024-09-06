@@ -4,6 +4,7 @@ import CallToAction from "../Components/CallToAction";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import PostCard from "../Components/PostCard";
+import { apiUrl } from "apiInstance";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -11,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("/api/post/getPosts");
+        const res = await axios.get(`${apiUrl}/api/post/getPosts`);
         if (res.status === 200) {
           setPosts(res.data.posts);
         }

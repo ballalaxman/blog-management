@@ -16,6 +16,7 @@ import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { apiUrl } from "apiInstance";
 
 const UpdatePost = () => {
   const navigate = useNavigate();
@@ -29,7 +30,9 @@ const UpdatePost = () => {
 
   const fetchPost = async () => {
     try {
-      const response = await axios.get(`/api/post/getposts?postId=${postId}`);
+      const response = await axios.get(
+        `${apiUrl}/api/post/getposts?postId=${postId}`
+      );
       if (response.statusText !== "OK") {
         console.log(response.statusText);
         setPublishError(response.data.message);
@@ -88,7 +91,7 @@ const UpdatePost = () => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `/api/post/updatepost/${postId}/${currentUser._id}`,
+        `${apiUrl}/api/post/updatepost/${postId}/${currentUser._id}`,
         formData
       );
       console.log(res);

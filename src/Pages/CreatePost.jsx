@@ -15,6 +15,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "apiInstance";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const CreatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/post/create", formData);
+      const res = await axios.post(`${apiUrl}/api/post/create`, formData);
       console.log(res);
       setPublishError(null);
       navigate(`/post/${res.data.slug}`);

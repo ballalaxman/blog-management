@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { apiUrl } from "apiInstance";
 
 const DashProfile = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -103,7 +104,7 @@ const DashProfile = () => {
     try {
       dispatch(updateStart());
       const res = await axios.put(
-        `/api/user/update/${currentUser._id}`,
+        `${apiUrl}/api/user/update/${currentUser._id}`,
         formData
       );
       dispatch(updateSuccess(res.data.data));
@@ -121,7 +122,9 @@ const DashProfile = () => {
     setShowmodel(false);
     try {
       dispatch(updateStart());
-      const res = await axios.delete(`/api/user/delete/${currentUser._id}`);
+      const res = await axios.delete(
+        `${apiUrl}/api/user/delete/${currentUser._id}`
+      );
       dispatch(updateSuccess(res.data.data));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
@@ -130,7 +133,7 @@ const DashProfile = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post("/api/user/signout");
+      await axios.post(`${apiUrl}/api/user/signout`);
       dispatch(signOutSuccess());
     } catch (error) {
       console.log(error);

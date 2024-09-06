@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
+import { apiUrl } from "apiInstance";
 import axios from "axios";
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ const DashComments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`/api/comment/getComments`);
+        const res = await axios.get(`${apiUrl}/api/comment/getComments`);
         setComments(res.data.comments);
         if (res.data.comments.length < 9) {
           setShowMore(false);
@@ -34,7 +35,7 @@ const DashComments = () => {
     const startIndex = comments.length;
     try {
       const response = await axios.get(
-        `/api/comment/getComments?startIndex=${startIndex}`
+        `${apiUrl}/api/comment/getComments?startIndex=${startIndex}`
       );
       setComments([...comments, ...response.data.comments]);
       if (response.data.users.length < 9) {
@@ -48,7 +49,7 @@ const DashComments = () => {
   const handleDeleteComment = async () => {
     setShowModel(false);
     try {
-      await axios.delete(`/api/comment/delete/${commentIdToDelete}`);
+      await axios.delete(`${apiUrl}/api/comment/delete/${commentIdToDelete}`);
       setComments((prev) =>
         prev.filter((comment) => comment._id !== commentIdToDelete)
       );

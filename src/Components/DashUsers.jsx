@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { apiUrl } from "apiInstance";
 import axios from "axios";
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ const DashUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get(`/api/user/getUsers`);
+        const res = await axios.get(`${apiUrl}/api/user/getUsers`);
         setUsers(res.data.users);
         if (res.data.users.length < 9) {
           setShowMore(false);
@@ -34,7 +35,7 @@ const DashUsers = () => {
     const startIndex = users.length;
     try {
       const response = await axios.get(
-        `/api/user/getUsers?startIndex=${startIndex}`
+        `${apiUrl}/api/user/getUsers?startIndex=${startIndex}`
       );
       setUsers([...users, ...response.data.users]);
       if (response.data.users.length < 9) {
@@ -48,7 +49,7 @@ const DashUsers = () => {
   const handleDeleteUser = async () => {
     setShowModel(false);
     try {
-      await axios.delete(`/api/user/delete/${userIdToDelete}`);
+      await axios.delete(`${apiUrl}/api/user/delete/${userIdToDelete}`);
       setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
     } catch (error) {
       console.log(error);

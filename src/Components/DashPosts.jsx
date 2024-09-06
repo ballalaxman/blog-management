@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { apiUrl } from "apiInstance";
 import axios from "axios";
 import { Button, Modal, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
@@ -17,7 +18,7 @@ const DashPosts = () => {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(
-          `/api/post/getposts?userId=${currentuser._id}`
+          `${apiUrl}/api/post/getposts?userId=${currentuser._id}`
         );
         setUserPosts(res.data.posts);
         if (res.data.posts.length < 9) {
@@ -36,7 +37,7 @@ const DashPosts = () => {
     const startIndex = userPosts.length;
     try {
       const response = await axios.get(
-        `/api/post/getposts?userId=${currentuser._id}&startIndex=${startIndex}`
+        `${apiUrl}/api/post/getposts?userId=${currentuser._id}&startIndex=${startIndex}`
       );
       setUserPosts([...userPosts, ...response.data.posts]);
       if (response.data.posts.length < 9) {
@@ -51,7 +52,7 @@ const DashPosts = () => {
     setShowModel(false);
     try {
       await axios.delete(
-        `/api/post/deletepost/${postIdToDelete}/${currentuser._id}`
+        `${apiUrl}/api/post/deletepost/${postIdToDelete}/${currentuser._id}`
       );
       setUserPosts((prev) =>
         prev.filter((post) => post._id !== postIdToDelete)

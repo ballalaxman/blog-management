@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { apiUrl } from "apiInstance";
 
 const CommentsSection = ({ postId }) => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const CommentsSection = ({ postId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/comment/create", {
+      const res = await axios.post(`${apiUrl}/api/comment/create`, {
         content: comment,
         postId: postId,
         userId: currentUser?._id
@@ -36,7 +37,9 @@ const CommentsSection = ({ postId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`/api/comment/getPostComments/${postId}`);
+        const res = await axios.get(
+          `${apiUrl}/api/comment/getPostComments/${postId}`
+        );
         setComments(res.data);
       } catch (error) {
         console.log(error);
@@ -51,7 +54,9 @@ const CommentsSection = ({ postId }) => {
         navigate("/signin");
         return;
       }
-      const res = await axios.put(`/api/comment/likeComment/${commentId}`);
+      const res = await axios.put(
+        `${apiUrl}/api/comment/likeComment/${commentId}`
+      );
       if (res.status === 200) {
         setComments(
           comments.map((comment) =>
@@ -84,7 +89,9 @@ const CommentsSection = ({ postId }) => {
         navigate("/signin");
         return;
       }
-      const res = await axios.delete(`/api/comment/delete/${commentToDelete}`);
+      const res = await axios.delete(
+        `${apiUrl}/api/comment/delete/${commentToDelete}`
+      );
       if (res.status === 200) {
         setComments(comments.filter((c) => c._id !== commentToDelete));
         setShowModel(false);

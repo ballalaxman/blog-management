@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { apiUrl } from "apiInstance";
 import axios from "axios";
 import { Button, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ const DashboardComponent = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get("/api/user/getUsers?limit=5");
+      const res = await axios.get(`${apiUrl}/api/user/getUsers?limit=5`);
       if (res.status === 200) {
         setUsers(res.data.users);
         setTotalUsers(res.data.totalUsers);
@@ -33,7 +34,7 @@ const DashboardComponent = () => {
       }
     };
     const fetchPosts = async () => {
-      const res = await axios.get("/api/post/getposts?limit=5");
+      const res = await axios.get(`${apiUrl}/api/post/getposts?limit=5`);
       if (res.status === 200) {
         setPosts(res.data.posts);
         setTotalPosts(res.data.totalPost);
@@ -41,7 +42,7 @@ const DashboardComponent = () => {
       }
     };
     const fetchComments = async () => {
-      const res = await axios.get("/api/comment/getComments?limit=5");
+      const res = await axios.get(`${apiUrl}/api/comment/getComments?limit=5`);
       if (res.status === 200) {
         setComments(res.data.comments);
         setTotalComments(res.data.totalComments);

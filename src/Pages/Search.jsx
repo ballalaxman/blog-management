@@ -5,6 +5,7 @@ import PostCard from "../Components/PostCard";
 import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { apiUrl } from "apiInstance";
 
 const Search = () => {
   const location = useLocation();
@@ -32,7 +33,9 @@ const Search = () => {
       setLoading(true);
       const searchQuery = urlParams.toString();
       try {
-        const res = await axios.get(`/api/post/getPosts?${searchQuery}`);
+        const res = await axios.get(
+          `${apiUrl}/api/post/getPosts?${searchQuery}`
+        );
         if (res.status === 200) {
           setPosts(res.data.posts);
           setShowMore(res.data.posts.length >= 9);
@@ -77,7 +80,7 @@ const Search = () => {
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
     try {
-      const res = await axios.get(`/api/post/getposts?${searchQuery}`);
+      const res = await axios.get(`${apiUrl}/api/post/getposts?${searchQuery}`);
       if (res.status === 200) {
         setPosts([...posts, ...res.data.posts]);
         setShowMore(res.data.posts.length >= 9);

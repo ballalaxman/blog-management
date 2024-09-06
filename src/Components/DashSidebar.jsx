@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../redux/userSlice";
+import { apiUrl } from "apiInstance";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const DashSidebar = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post("/api/user/signout");
+      await axios.post(`${apiUrl}/api/user/signout`);
       dispatch(signOutSuccess());
     } catch (error) {
       console.log(error);

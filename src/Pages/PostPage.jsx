@@ -7,6 +7,7 @@ import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PostCard from "../Components/PostCard";
+import { apiUrl } from "apiInstance";
 
 const PostPage = () => {
   const { postSlug } = useParams();
@@ -18,7 +19,7 @@ const PostPage = () => {
   useEffect(() => {
     try {
       const fetchRecentPosts = async () => {
-        const response = await axios.get("/api/post/getposts?limit=3");
+        const response = await axios.get(`${apiUrl}/api/post/getposts?limit=3`);
         if (response.status === 200) {
           setRecentPosts(response.data.posts);
         }
@@ -33,7 +34,9 @@ const PostPage = () => {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/post/getposts?slug=${postSlug}`);
+        const res = await axios.get(
+          `${apiUrl}/api/post/getposts?slug=${postSlug}`
+        );
         if (res.status === 200) {
           setPost(res.data.posts[0]);
           setLoading(false);

@@ -9,6 +9,7 @@ import { toggleTheme } from "../redux/themeSlice";
 import axios from "axios";
 import { signOutSuccess } from "../redux/userSlice";
 import { useEffect, useState } from "react";
+import { apiUrl } from "apiInstance";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Header = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post("/api/user/signout");
+      await axios.post(`${apiUrl}/api/user/signout`);
       dispatch(signOutSuccess());
     } catch (error) {
       console.log(error);

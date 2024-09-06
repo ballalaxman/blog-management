@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable react/prop-types */
+import { apiUrl } from "apiInstance";
 import axios from "axios";
 import { Button, Textarea } from "flowbite-react";
 import moment from "moment";
@@ -16,7 +17,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`/api/user/${comment.userId}`);
+        const res = await axios.get(`${apiUrl}/api/user/${comment.userId}`);
         if (res.status === 200) {
           setUser(res.data);
         }
@@ -34,9 +35,12 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(`/api/comment/editComment/${comment._id}`, {
-        content: editedContent
-      });
+      const res = await axios.put(
+        `${apiUrl}/api/comment/editComment/${comment._id}`,
+        {
+          content: editedContent
+        }
+      );
       if (res.status === 200) {
         setIsEditing(false);
         onEdit(comment, editedContent);
